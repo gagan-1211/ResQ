@@ -112,10 +112,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📞 Contact
 
-Gagan Nadiger - [GitHub](https://github.com/gagan-1211)
+Gagan Nadiger - [Linkedin](https://www.linkedin.com/in/gagan-nadiger-606781256/)
 
 Project Link: [https://github.com/gagan-1211/ResQ](https://github.com/gagan-1211/ResQ)
 
 ---
 
-Made with ❤️ by the Disaster Management Team 
+Made with ❤️ by ResQ  Team 
