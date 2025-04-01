@@ -1,0 +1,158 @@
+<!-- navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+            <i class="fas fa-hands-helping"></i> Disaster Management
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="emergencyDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-exclamation-triangle"></i> Emergency
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="emergencyDropdown">
+                        <li><a class="dropdown-item" href="emergency.html">Report Emergency</a></li>
+                        <li><a class="dropdown-item" href="emergency-list.html">View All Emergencies</a></li>
+                        <li><a class="dropdown-item" href="damage-report.html">Submit Damage Report</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="resourceDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-boxes"></i> Resources
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="resourceDropdown">
+                        <li><a class="dropdown-item" href="resource-management.html">Manage Resources</a></li>
+                        <li><a class="dropdown-item" href="requestresource.html">Request Resources</a></li>
+                        <li><a class="dropdown-item" href="resource-inventory.html">View Inventory</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="volunteerDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-users"></i> Volunteers
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="volunteerDropdown">
+                        <li><a class="dropdown-item" href="volunteer-registration.html">Register as Volunteer</a></li>
+                        <li><a class="dropdown-item" href="volunteer-management.html">Manage Volunteers</a></li>
+                        <li><a class="dropdown-item" href="volunteer-training.html">Training Programs</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="alerts-dashboard.html"><i class="fas fa-bell"></i> Alerts</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user-circle"></i> Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-danger ms-2" onclick="handleSOS()">
+                        <i class="fas fa-exclamation-circle"></i> SOS
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Add spacing after navbar -->
+<div style="margin-top: 80px;"></div>
+
+<script>
+// Update active nav item based on current page
+document.addEventListener('DOMContentLoaded', () => {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+            link.classList.add('text-primary');
+        }
+    });
+});
+
+// Handle logout
+document.getElementById('logoutButton').addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+        // Import auth service
+        const { auth } = await import('./js/firebaseConfig.js');
+        await auth.signOut();
+        window.location.href = 'index.html';
+    } catch (error) {
+        console.error('Logout error:', error);
+        alert('Error logging out. Please try again.');
+    }
+});
+
+// SOS Button Handler
+document.getElementById('sosButton').addEventListener('click', async () => {
+    if (confirm('Are you sure you want to send an SOS alert? This will notify emergency responders.')) {
+        try {
+            // Get user's location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const { dbService } = await import('./js/firebaseConfig.js');
+                    await dbService.createSOS({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        timestamp: Date.now(),
+                        status: 'active'
+                    });
+                    alert('SOS alert sent successfully. Emergency responders have been notified.');
+                }, () => {
+                    alert('Could not get your location. Please try again or provide location manually.');
+                });
+            } else {
+                alert('Geolocation is not supported by your browser.');
+            }
+        } catch (error) {
+            console.error('SOS error:', error);
+            alert('Error sending SOS. Please try again or contact emergency services directly.');
+        }
+    }
+});
+
+// Alert count handler
+function updateAlertCount(count) {
+    const alertCountBadge = document.querySelector('.alert-count');
+    if (count > 0) {
+        alertCountBadge.style.display = 'inline-block';
+        alertCountBadge.textContent = count;
+    } else {
+        alertCountBadge.style.display = 'none';
+    }
+}
+
+// Listen for new alerts
+window.addEventListener('disaster-alert', () => {
+    const currentCount = parseInt(document.querySelector('.alert-count').textContent || '0');
+    updateAlertCount(currentCount + 1);
+});
+
+// Reset count when visiting alerts page
+if (window.location.pathname.includes('alerts.html')) {
+    updateAlertCount(0);
+}
+</script>

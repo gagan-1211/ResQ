@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Registration - Disaster Management</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Include Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container mt-5 pt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="fas fa-building"></i> NGO Registration</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="ngoRegistrationForm">
+                            <!-- Organization Details -->
+                            <h5 class="mb-3">Organization Details</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="orgName" class="form-label">Organization Name</label>
+                                    <input type="text" class="form-control" id="orgName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="regNumber" class="form-label">Registration Number</label>
+                                    <input type="text" class="form-control" id="regNumber" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Official Email</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Contact Number</label>
+                                    <input type="tel" class="form-control" id="phone" required>
+                                </div>
+                            </div>
+
+                            <!-- Address -->
+                            <h5 class="mb-3 mt-4">Address</h5>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Street Address</label>
+                                <input type="text" class="form-control" id="address" required>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="city" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="state" class="form-label">State</label>
+                                    <input type="text" class="form-control" id="state" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="pincode" class="form-label">Pincode</label>
+                                    <input type="text" class="form-control" id="pincode" required>
+                                </div>
+                            </div>
+
+                            <!-- Areas of Operation -->
+                            <h5 class="mb-3 mt-4">Areas of Operation</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Select Areas of Expertise</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="medical" id="medical">
+                                            <label class="form-check-label" for="medical">Medical Aid</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="food" id="food">
+                                            <label class="form-check-label" for="food">Food Distribution</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="shelter" id="shelter">
+                                            <label class="form-check-label" for="shelter">Shelter Management</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="rescue" id="rescue">
+                                            <label class="form-check-label" for="rescue">Search & Rescue</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="education" id="education">
+                                            <label class="form-check-label" for="education">Education</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="other" id="other">
+                                            <label class="form-check-label" for="other">Other</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Account Security -->
+                            <h5 class="mb-3 mt-4">Account Security</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirmPassword" required>
+                                </div>
+                            </div>
+
+                            <!-- Documents Upload -->
+                            <h5 class="mb-3 mt-4">Required Documents</h5>
+                            <div class="mb-3">
+                                <label for="regCertificate" class="form-label">Registration Certificate</label>
+                                <input type="file" class="form-control" id="regCertificate" accept=".pdf,.jpg,.jpeg,.png" required>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-user-plus"></i> Register NGO
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Include Navbar -->
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            });
+    </script>
+
+    <!-- NGO Registration JavaScript -->
+    <script type="module">
+        import { firebaseService } from './js/services/firebaseService.js';
+
+        const form = document.getElementById('ngoRegistrationForm');
+        const inputs = {
+            orgName: document.getElementById('orgName'),
+            regNumber: document.getElementById('regNumber'),
+            email: document.getElementById('email'),
+            phone: document.getElementById('phone'),
+            address: document.getElementById('address'),
+            city: document.getElementById('city'),
+            state: document.getElementById('state'),
+            pincode: document.getElementById('pincode'),
+            password: document.getElementById('password'),
+            confirmPassword: document.getElementById('confirmPassword'),
+            regCertificate: document.getElementById('regCertificate')
+        };
+
+        // Clear previous errors
+        function clearErrors() {
+            Object.values(inputs).forEach(input => {
+                input.classList.remove('is-invalid');
+                const errorDiv = input.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.remove();
+                }
+            });
+        }
+
+        // Show error messages
+        function showErrors(errors) {
+            Object.entries(errors).forEach(([field, message]) => {
+                const input = inputs[field];
+                if (input) {
+                    input.classList.add('is-invalid');
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'invalid-feedback';
+                    errorDiv.textContent = message;
+                    input.parentNode.appendChild(errorDiv);
+                }
+            });
+        }
+
+        // Validate NGO specific fields
+        function validateNGOFields(data) {
+            const errors = {};
+
+            if (!data.orgName?.trim()) {
+                errors.orgName = "Organization Name Field can't be empty";
+            }
+
+            if (!data.regNumber?.trim()) {
+                errors.regNumber = "Registration Number Field can't be empty";
+            }
+
+            if (!data.address?.trim()) {
+                errors.address = "Street Address Field can't be empty";
+            }
+
+            if (!data.city?.trim()) {
+                errors.city = "City Field can't be empty";
+            }
+
+            if (!data.state?.trim()) {
+                errors.state = "State Field can't be empty";
+            }
+
+            if (!data.pincode?.trim()) {
+                errors.pincode = "Pincode Field can't be empty";
+            } else if (!/^\d{6}$/.test(data.pincode)) {
+                errors.pincode = "Enter a valid 6-digit Pincode";
+            }
+
+            const selectedAreas = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (selectedAreas.length === 0) {
+                errors.areas = "Please select at least one area of expertise";
+                // Show error near the first checkbox
+                const firstCheckbox = document.querySelector('input[type="checkbox"]');
+                if (firstCheckbox) {
+                    firstCheckbox.classList.add('is-invalid');
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'invalid-feedback d-block';
+                    errorDiv.textContent = errors.areas;
+                    firstCheckbox.parentNode.appendChild(errorDiv);
+                }
+            }
+
+            if (!data.regCertificate) {
+                errors.regCertificate = "Registration Certificate is required";
+            } else {
+                const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+                if (!allowedTypes.includes(data.regCertificate.type)) {
+                    errors.regCertificate = "Please upload a PDF, JPG, or PNG file";
+                }
+            }
+
+            return errors;
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearErrors();
+
+            try {
+                // Get form data
+                const ngoData = {
+                    orgName: inputs.orgName.value,
+                    regNumber: inputs.regNumber.value,
+                    email: inputs.email.value,
+                    phone: inputs.phone.value,
+                    password: inputs.password.value,
+                    confirmPassword: inputs.confirmPassword.value,
+                    address: inputs.address.value,
+                    city: inputs.city.value,
+                    state: inputs.state.value,
+                    pincode: inputs.pincode.value,
+                    regCertificate: inputs.regCertificate.files[0],
+                    userType: 'ngos',
+                    status: 'pending',
+                    additionalData: {
+                        address: {
+                            street: inputs.address.value,
+                            city: inputs.city.value,
+                            state: inputs.state.value,
+                            pincode: inputs.pincode.value
+                        },
+                        areasOfOperation: Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                            .map(checkbox => checkbox.value)
+                    }
+                };
+
+                // Validate all inputs
+                const basicErrors = firebaseService.validateInput(ngoData);
+                const ngoErrors = validateNGOFields(ngoData);
+                const errors = { ...basicErrors, ...ngoErrors };
+
+                if (Object.keys(errors).length > 0) {
+                    showErrors(errors);
+                    return;
+                }
+
+                // Show loading state
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registering...';
+
+                try {
+                    // Register NGO
+                    const result = await firebaseService.signUpUser(ngoData);
+
+                    if (result.success) {
+                        // Upload registration certificate
+                        const certificateUrl = await firebaseService.uploadFile(
+                            `ngo-documents/${result.uid}/registration-certificate`,
+                            ngoData.regCertificate
+                        );
+
+                        // Update NGO data with certificate URL
+                        await firebaseService.updateUserData('ngos', result.uid, {
+                            registrationCertificate: certificateUrl
+                        });
+
+                        alert('Registration successful! Please wait for admin approval.');
+                        window.location.href = 'ngo-login.html';
+                    }
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    alert('Error during registration: ' + error.message);
+                } finally {
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            } catch (error) {
+                console.error('Form processing error:', error);
+                alert('Error processing form: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html> 

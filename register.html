@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Disaster Management</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+        }
+        .register-card {
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .register-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+        }
+        .form-control {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            padding: 0.75rem;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .btn-register {
+            padding: 0.75rem;
+            font-weight: 600;
+        }
+        .password-requirements {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+        .password-requirements ul {
+            padding-left: 1.25rem;
+            margin-bottom: 0;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-card fade-in">
+            <h2 class="register-title">
+                <i class="fas fa-user-plus text-primary"></i>
+                Create Account
+            </h2>
+            
+            <form id="registerForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                    <div class="password-requirements">
+                        <p class="mb-1">Password must contain:</p>
+                        <ul>
+                            <li>At least 8 characters</li>
+                            <li>At least one uppercase letter</li>
+                            <li>At least one lowercase letter</li>
+                            <li>At least one number</li>
+                            <li>At least one special character</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                    <label class="form-check-label" for="termsCheck">
+                        I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 btn-register">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+            </form>
+
+            <div class="login-link">
+                <p class="mb-0">Already have an account? <a href="login.html">Login here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Terms and Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>1. Account Registration</h6>
+                    <p>By registering, you agree to provide accurate and complete information. You are responsible for maintaining the confidentiality of your account credentials.</p>
+                    
+                    <h6>2. Privacy</h6>
+                    <p>Your personal information will be handled in accordance with our privacy policy. We collect and use your data to provide disaster management services.</p>
+                    
+                    <h6>3. Volunteer Responsibilities</h6>
+                    <p>As a registered user, you may be called upon to assist in disaster response efforts. You agree to respond to emergency situations within your capacity and training.</p>
+                    
+                    <h6>4. Communication</h6>
+                    <p>You agree to receive emergency alerts and notifications related to disaster management activities.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Registration JavaScript -->
+    <script type="module">
+        import { firebaseService } from './js/services/firebaseService.js';
+        import { dbService } from './js/services/dbService.js';
+
+        const registerForm = document.getElementById('registerForm');
+
+        // Password validation
+        function validatePassword(password) {
+            const minLength = password.length >= 8;
+            const hasUpper = /[A-Z]/.test(password);
+            const hasLower = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            
+            return minLength && hasUpper && hasLower && hasNumber && hasSpecial;
+        }
+
+        // Registration form submission
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const phone = document.getElementById('phone').value.trim();
+            const submitBtn = registerForm.querySelector('button[type="submit"]');
+
+            try {
+                // Validate password
+                if (!validatePassword(password)) {
+                    showAlert('Password does not meet the requirements', 'warning');
+                    return;
+                }
+
+                // Check if passwords match
+                if (password !== confirmPassword) {
+                    showAlert('Passwords do not match', 'warning');
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
+
+                // Create user account
+                const userCredential = await firebaseService.auth.createUserWithEmailAndPassword(email, password);
+                
+                // Add user profile data
+                await firebaseService.auth.currentUser.updateProfile({
+                    displayName: `${firstName} ${lastName}`
+                });
+
+                // Store additional user data in Realtime Database
+                await dbService.rtdb.ref(`users/${userCredential.user.uid}`).set({
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    role: 'volunteer',
+                    createdAt: new Date().toISOString(),
+                    status: 'active'
+                });
+
+                showAlert('Account created successfully!', 'success');
+                
+                // Redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAlert(getErrorMessage(error), 'danger');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Register';
+            }
+        });
+
+        // Helper Functions
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
+            alertDiv.style.zIndex = 1050;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            document.body.appendChild(alertDiv);
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        function getErrorMessage(error) {
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    return 'An account with this email already exists';
+                case 'auth/invalid-email':
+                    return 'Invalid email address';
+                case 'auth/operation-not-allowed':
+                    return 'Email/password accounts are not enabled. Please contact support.';
+                case 'auth/weak-password':
+                    return 'Password is too weak. Please follow the password requirements.';
+                default:
+                    return error.message;
+            }
+        }
+
+        // Check if user is already logged in
+        firebaseService.auth.onAuthStateChanged((user) => {
+            if (user) {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html> 

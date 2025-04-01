@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kerala Disaster Prediction Map</title>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEcb3r1v4Li3XVugHdzy3uT5peexKOUBY&callback=initMap">
+    </script>
+    <script>
+    const WEATHER_API_KEY = '35ce3a6667937fe8dfddc88ee414ea1d';
+
+    const ngoCenters = [
+        { lat: 10.5745, lng: 76.2632, name: "NGO Center 1 - Relief Hub" },
+        { lat: 10.5800, lng: 76.2700, name: "NGO Center 2 - Rescue Base" },
+        { lat: 9.5481, lng: 76.3888, name: "NGO Center 3 - Emergency Shelter" },
+        { lat: 9.5500, lng: 76.3950, name: "NGO Center 4 - Medical Aid" },
+        { lat: 9.8980, lng: 77.0102, name: "NGO Center 5 - Landslide Help" },
+        { lat: 9.9050, lng: 77.0180, name: "NGO Center 6 - Disaster Relief" },
+        { lat: 8.5741, lng: 76.9866, name: "NGO Center 7 - Cyclone Relief" },
+        { lat: 8.5800, lng: 76.9920, name: "NGO Center 8 - Emergency Support" },
+        { lat: 10.8367, lng: 76.7048, name: "NGO Center 9 - Flood Assistance" },
+        { lat: 10.8400, lng: 76.7100, name: "NGO Center 10 - Rescue Team" }
+    ];
+
+    function getRandomLocationWithinKerala() {
+        const latMin = 8.1800, latMax = 12.7400;
+        const lngMin = 74.8500, lngMax = 77.3600;
+        const randomLat = latMin + (latMax - latMin) * Math.random();
+        const randomLng = lngMin + (lngMax - lngMin) * Math.random();
+        return { lat: randomLat, lng: randomLng };
+    }
+
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 10.8505, lng: 76.2711 },
+            zoom: 8,
+            mapTypeControl: false,
+            streetViewControl: false
+        });
+
+        function addMarker(location, icon, title) {
+            const marker = new google.maps.Marker({
+                position: { lat: location.lat, lng: location.lng },
+                map: map,
+                title: title,
+                icon: icon
+            });
+        }
+
+        const randomLocation = getRandomLocationWithinKerala();
+        addMarker(randomLocation, "https://maps.google.com/mapfiles/ms/icons/red-dot.png", "Random Location");
+
+        sendSOS(randomLocation);
+    }
+
+    function calculateDistance(lat1, lng1, lat2, lng2) {
+        const R = 6371; // Radius of the Earth in km
+        const dLat = (lat2 - lat1) * (Math.PI / 180);
+        const dLng = (lng2 - lng1) * (Math.PI / 180);
+        const a = 
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+            Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // Distance in km
+        return distance;
+    }
+
+    function sendSOS(currentLocation) {
+        const distances = ngoCenters.map(center => ({
+            ...center,
+            distance: calculateDistance(currentLocation.lat, currentLocation.lng, center.lat, center.lng)
+        })).sort((a, b) => a.distance - b.distance);
+
+        const nearestCenter = distances[0];
+
+        const confirmationMessages = [
+            "🚨 SOS Alert Sent! Help is on its way. Stay strong, support is coming soon!",
+            "🚨 SOS Alert Sent! We’ve got your back. Assistance is on the way!",
+            "🚨 SOS Alert Sent! Please hold on, help is on the way. You’re not alone!",
+            "🚨 SOS Alert Sent! Stay calm, we’re coming to help you.",
+            "🚨 SOS Alert Sent! Courage! Help is on the way and you will soon be safe."
+        ];
+
+        const randomMessage = confirmationMessages[Math.floor(Math.random() * confirmationMessages.length)];
+
+        document.getElementById("status").innerHTML = randomMessage;
+
+        setTimeout(() => {
+            document.getElementById("cancelButton").style.display = "block";
+        }, 5000);
+
+        setTimeout(() => {
+            if (document.getElementById("status").innerHTML !== "❌ SOS Alert Canceled!") {
+                const timeRequired = (nearestCenter.distance / 50) * 60; // Assuming average speed of 50 km/h
+                let link = `<a href='https://www.google.com/maps/dir/?api=1&destination=${nearestCenter.lat},${nearestCenter.lng}' target='_blank'><strong>${nearestCenter.name}</strong> - <span style="font-size: 24px;">${nearestCenter.distance.toFixed(2)} km</span> (<span style="font-size: 24px;">${timeRequired.toFixed(2)} minutes</span>)</a>`;
+                document.getElementById("ngoLinks").innerHTML = `<p>Nearest NGO Center:</p>${link}`;
+            }
+        }, 10000);
+    }
+
+    function cancelSOS() {
+        document.getElementById("status").innerHTML = "❌ SOS Alert Canceled!";
+        document.getElementById("cancelButton").style.display = "none";
+        document.getElementById("ngoLinks").innerHTML = "";
+    }
+
+    window.onload = function() {
+        initMap();
+    };
+    </script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #1E88E5;
+        }
+        .sos-button, #cancelButton {
+            background-color: red;
+            color: white;
+            padding: 20px;
+            font-size: 25px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            display: block;
+            margin: 20px auto;
+            width: 300px;
+        }
+        #cancelButton {
+            background-color: gray;
+            display: none;
+        }
+        #ngoLinks {
+            text-align: center;
+            margin-top: 10px;
+        }
+        #status {
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌍 Kerala Disaster Prediction Map</h1>
+    <button class="sos-button" onclick="sendSOS()">🚨 Send SOS Alert</button>
+    <div id="status" style="text-align:center; margin-top: 10px;"></div>
+    <button id="cancelButton" onclick="cancelSOS()">Cancel SOS</button>
+    <div id="ngoLinks"></div>
+    <div id="map"></div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Data Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h2 {
+            color: #333;
+        }
+        .info {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .data-structure {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Disaster Management System - Data Operations Test</h2>
+        
+        <div class="info">
+            <p>This page tests the following data operations:</p>
+            <ol>
+                <li>Emergency Alerts</li>
+                <li>Resource Management</li>
+                <li>Volunteer Management</li>
+                <li>NGO Management</li>
+                <li>Relief Camp Management</li>
+            </ol>
+            <p>Check the browser console (F12) for test results</p>
+        </div>
+
+        <h3>Data Structures Being Tested:</h3>
+        
+        <div class="data-structure">
+            <h4>Emergency Alerts</h4>
+            <pre>
+{
+    type: 'FLOOD',
+    severity: 'HIGH',
+    location: {
+        latitude: number,
+        longitude: number,
+        address: string
+    },
+    description: string,
+    status: 'ACTIVE' | 'RESOLVED'
+}
+            </pre>
+        </div>
+
+        <div class="data-structure">
+            <h4>Resources</h4>
+            <pre>
+{
+    type: 'MEDICAL' | 'FOOD' | 'SHELTER',
+    name: string,
+    quantity: number,
+    location: {
+        latitude: number,
+        longitude: number,
+        address: string
+    },
+    status: 'AVAILABLE' | 'IN_USE' | 'DEPLETED'
+}
+            </pre>
+        </div>
+
+        <div class="data-structure">
+            <h4>Volunteers</h4>
+            <pre>
+{
+    personalInfo: {
+        fullName: string,
+        email: string,
+        phone: string
+    },
+    skills: string[],
+    availability: {
+        status: 'ACTIVE' | 'INACTIVE',
+        preferredTiming: string
+    }
+}
+            </pre>
+        </div>
+
+        <div class="data-structure">
+            <h4>NGOs</h4>
+            <pre>
+{
+    organizationInfo: {
+        name: string,
+        registrationNumber: string,
+        contact: string
+    },
+    expertise: string[],
+    coverage: {
+        states: string[],
+        districts: string[]
+    }
+}
+            </pre>
+        </div>
+
+        <div class="data-structure">
+            <h4>Relief Camps</h4>
+            <pre>
+{
+    name: string,
+    location: {
+        latitude: number,
+        longitude: number,
+        address: string
+    },
+    capacity: {
+        total: number,
+        current: number
+    },
+    facilities: {
+        medical: boolean,
+        food: boolean,
+        water: boolean
+    }
+}
+            </pre>
+        </div>
+    </div>
+
+    <script type="module" src="js/services/testDataOperations.js"></script>
+</body>
+</html> 

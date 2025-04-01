@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Dashboard - Disaster Management</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .card {
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .emergency-card {
+            border-left: 4px solid;
+        }
+        .emergency-high { border-left-color: #dc3545; }
+        .emergency-medium { border-left-color: #ffc107; }
+        .emergency-low { border-left-color: #28a745; }
+    </style>
+</head>
+<body>
+    <!-- Include Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container-fluid mt-4">
+        <!-- Weather Information Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-cloud text-primary"></i> Weather Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row" id="weatherInfo">
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center">
+                                    <img id="weatherIcon" src="" alt="Weather Icon" class="me-3" style="width: 50px;">
+                                    <div>
+                                        <h6 class="mb-1">Current Weather</h6>
+                                        <p class="mb-0" id="weatherDescription">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex flex-column">
+                                    <div class="mb-2">
+                                        <i class="fas fa-temperature-high text-danger"></i>
+                                        <span id="temperature">--°C</span>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-wind text-primary"></i>
+                                        <span id="windSpeed">-- km/h</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="weatherAlert" class="alert alert-warning d-none">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <span id="alertMessage"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Volunteer Profile Section -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-user-circle fa-4x text-primary"></i>
+                        </div>
+                        <h5 class="card-title text-center" id="volunteerName">Loading...</h5>
+                        <p class="text-muted text-center mb-3" id="volunteerEmail"></p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm" onclick="editProfile()">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Your Skills</h5>
+                        <div id="skillsList" class="mb-3"></div>
+                        <h5 class="card-title">Availability Status</h5>
+                        <div class="d-flex align-items-center">
+                            <select class="form-select w-auto me-2" id="availabilityStatus">
+                                <option value="available">Available</option>
+                                <option value="busy">Busy</option>
+                                <option value="unavailable">Unavailable</option>
+                            </select>
+                            <button class="btn btn-primary btn-sm" onclick="updateAvailability()">
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Emergencies Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-exclamation-triangle text-danger"></i> Active Emergencies</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="activeEmergencies" class="row g-3">
+                            <!-- Active emergencies will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Your Tasks Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-tasks text-primary"></i> Your Tasks</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Task</th>
+                                        <th>Location</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>Due Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tasksList">
+                                    <!-- Tasks will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Include Navbar -->
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            });
+    </script>
+
+    <!-- Volunteer Dashboard JavaScript -->
+    <script type="module">
+        import { firebaseService } from './js/services/firebaseService.js';
+        import { dbService } from './js/services/dbService.js';
+        import weatherService from './js/services/weatherService.js';
+
+        // Load volunteer profile
+        async function loadVolunteerProfile() {
+            try {
+                const user = firebaseService.auth.currentUser;
+                if (!user) {
+                    window.location.href = 'volunteer-login.html';
+                    return;
+                }
+
+                const volunteerData = await dbService.getVolunteerData(user.uid);
+                if (volunteerData) {
+                    document.getElementById('volunteerName').textContent = volunteerData.fullName;
+                    document.getElementById('volunteerEmail').textContent = user.email;
+                    
+                    // Display skills
+                    const skillsList = document.getElementById('skillsList');
+                    if (volunteerData.skills && volunteerData.skills.length > 0) {
+                        skillsList.innerHTML = volunteerData.skills.map(skill => 
+                            `<span class="badge bg-primary me-2 mb-2">${skill}</span>`
+                        ).join('');
+                    } else {
+                        skillsList.innerHTML = '<p class="text-muted">No skills listed</p>';
+                    }
+
+                    // Set availability status
+                    document.getElementById('availabilityStatus').value = volunteerData.availability || 'available';
+                }
+            } catch (error) {
+                console.error('Error loading volunteer profile:', error);
+                alert('Error loading profile data');
+            }
+        }
+
+        // Load active emergencies
+        async function loadActiveEmergencies() {
+            try {
+                const emergencies = await dbService.getActiveEmergencies();
+                const emergenciesContainer = document.getElementById('activeEmergencies');
+                
+                if (emergencies.length === 0) {
+                    emergenciesContainer.innerHTML = `
+                        <div class="col-12">
+                            <div class="alert alert-info">No active emergencies at the moment.</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                emergenciesContainer.innerHTML = emergencies.map(emergency => `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card emergency-card emergency-${emergency.severity.toLowerCase()}">
+                            <div class="card-body">
+                                <span class="badge bg-${getSeverityColor(emergency.severity)} status-badge">
+                                    ${emergency.severity}
+                                </span>
+                                <h5 class="card-title">${emergency.type}</h5>
+                                <p class="card-text">${emergency.description}</p>
+                                <p class="card-text"><small class="text-muted">Location: ${emergency.location}</small></p>
+                                <button class="btn btn-primary btn-sm" onclick="volunteerForEmergency('${emergency.id}')">
+                                    Volunteer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading active emergencies:', error);
+            }
+        }
+
+        // Load volunteer tasks
+        async function loadVolunteerTasks() {
+            try {
+                const user = firebaseService.auth.currentUser;
+                const tasks = await dbService.getVolunteerTasks(user.uid);
+                const tasksList = document.getElementById('tasksList');
+
+                if (tasks.length === 0) {
+                    tasksList.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="text-center">No tasks assigned</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tasksList.innerHTML = tasks.map(task => `
+                    <tr>
+                        <td>${task.title}</td>
+                        <td>${task.location}</td>
+                        <td><span class="badge bg-${getPriorityColor(task.priority)}">${task.priority}</span></td>
+                        <td><span class="badge bg-${getStatusColor(task.status)}">${task.status}</span></td>
+                        <td>${formatDate(task.dueDate)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-success" onclick="updateTaskStatus('${task.id}', 'completed')">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading volunteer tasks:', error);
+            }
+        }
+
+        // Load weather information
+        async function loadWeatherInfo() {
+            try {
+                // Default coordinates (should be replaced with volunteer's location)
+                const lat = 12.9716;
+                const lon = 77.5946;
+
+                // Set your OpenWeatherMap API key
+                weatherService.setApiKey('YOUR_API_KEY'); // Replace with actual API key
+
+                const weatherData = await weatherService.getCurrentWeather(lat, lon);
+                const formattedData = weatherService.formatWeatherData(weatherData);
+
+                // Update weather display
+                document.getElementById('weatherIcon').src = formattedData.icon;
+                document.getElementById('weatherDescription').textContent = formattedData.description;
+                document.getElementById('temperature').textContent = formattedData.temperature;
+                document.getElementById('windSpeed').textContent = formattedData.windSpeed;
+
+                // Check for severe weather
+                const riskLevel = weatherService.getWeatherRiskLevel(weatherData);
+                const alertDiv = document.getElementById('weatherAlert');
+                const alertMessage = document.getElementById('alertMessage');
+
+                if (riskLevel === 'high') {
+                    alertDiv.classList.remove('d-none', 'alert-warning');
+                    alertDiv.classList.add('alert-danger');
+                    alertMessage.textContent = 'Severe weather conditions detected. Exercise caution.';
+                } else if (riskLevel === 'moderate') {
+                    alertDiv.classList.remove('d-none', 'alert-danger');
+                    alertDiv.classList.add('alert-warning');
+                    alertMessage.textContent = 'Moderate weather risk. Stay alert.';
+                } else {
+                    alertDiv.classList.add('d-none');
+                }
+
+            } catch (error) {
+                console.error('Error loading weather information:', error);
+                document.getElementById('weatherDescription').textContent = 'Weather data unavailable';
+            }
+        }
+
+        // Utility functions
+        function getSeverityColor(severity) {
+            switch (severity?.toLowerCase()) {
+                case 'high': return 'danger';
+                case 'medium': return 'warning';
+                case 'low': return 'success';
+                default: return 'secondary';
+            }
+        }
+
+        function getPriorityColor(priority) {
+            switch (priority?.toLowerCase()) {
+                case 'high': return 'danger';
+                case 'medium': return 'warning';
+                case 'low': return 'success';
+                default: return 'secondary';
+            }
+        }
+
+        function getStatusColor(status) {
+            switch (status?.toLowerCase()) {
+                case 'completed': return 'success';
+                case 'in_progress': return 'primary';
+                case 'pending': return 'warning';
+                default: return 'secondary';
+            }
+        }
+
+        function formatDate(timestamp) {
+            if (!timestamp) return 'N/A';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleString();
+        }
+
+        // Make functions available globally
+        window.editProfile = () => {
+            // Implement edit profile functionality
+            console.log('Edit profile clicked');
+        };
+
+        window.updateAvailability = async () => {
+            const statusSelect = document.getElementById('availabilityStatus');
+            const updateBtn = statusSelect.nextElementSibling;
+            const originalText = updateBtn.innerHTML;
+
+            try {
+                // Disable the button and show loading state
+                updateBtn.disabled = true;
+                updateBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Updating...';
+
+                const status = statusSelect.value;
+                const user = firebaseService.auth.currentUser;
+                
+                if (!user) {
+                    throw new Error('Please log in to update your availability');
+                }
+
+                await dbService.updateVolunteerAvailability(user.uid, status);
+                
+                // Show success message
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-success alert-dismissible fade show mt-3';
+                alert.innerHTML = `
+                    <strong>Success!</strong> Your availability has been updated to "${status}".
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                statusSelect.parentElement.appendChild(alert);
+
+                // Remove the alert after 3 seconds
+                setTimeout(() => {
+                    alert.remove();
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error updating availability:', error);
+                
+                // Show error message
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-danger alert-dismissible fade show mt-3';
+                alert.innerHTML = `
+                    <strong>Error!</strong> ${error.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                statusSelect.parentElement.appendChild(alert);
+                
+                // Remove the error after 5 seconds
+                setTimeout(() => {
+                    alert.remove();
+                }, 5000);
+            } finally {
+                // Reset button state
+                updateBtn.disabled = false;
+                updateBtn.innerHTML = originalText;
+            }
+        };
+
+        window.volunteerForEmergency = async (emergencyId) => {
+            try {
+                const user = firebaseService.auth.currentUser;
+                await dbService.volunteerForEmergency(user.uid, emergencyId);
+                alert('Thank you for volunteering! You will be contacted with further details.');
+                loadActiveEmergencies();
+                loadVolunteerTasks();
+            } catch (error) {
+                console.error('Error volunteering for emergency:', error);
+                alert('Error volunteering for emergency');
+            }
+        };
+
+        window.updateTaskStatus = async (taskId, status) => {
+            try {
+                await dbService.updateTaskStatus(taskId, status);
+                loadVolunteerTasks();
+            } catch (error) {
+                console.error('Error updating task status:', error);
+                alert('Error updating task status');
+            }
+        };
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Wait for auth state to be ready
+                await new Promise((resolve) => {
+                    const unsubscribe = firebaseService.auth.onAuthStateChanged((user) => {
+                        if (!user) {
+                            window.location.href = 'volunteer-login.html';
+                            return;
+                        }
+                        unsubscribe();
+                        resolve(user);
+                    });
+                });
+
+                // Load all dashboard data
+                await Promise.all([
+                    loadVolunteerProfile(),
+                    loadActiveEmergencies(),
+                    loadVolunteerTasks(),
+                    loadWeatherInfo()
+                ]);
+
+                // Set up real-time updates
+                const user = firebaseService.auth.currentUser;
+                dbService.db.ref(`volunteers/${user.uid}`).on('value', () => loadVolunteerProfile());
+                dbService.db.ref('emergencies').on('value', () => loadActiveEmergencies());
+                dbService.db.ref(`volunteer_tasks/${user.uid}`).on('value', () => loadVolunteerTasks());
+
+                // Update weather every 30 minutes
+                setInterval(loadWeatherInfo, 30 * 60 * 1000);
+
+            } catch (error) {
+                console.error('Error initializing dashboard:', error);
+            }
+        });
+    </script>
+</body>
+</html> 

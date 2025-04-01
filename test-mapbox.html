@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapbox Token Test</title>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet'>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; }
+        #map { width: 100%; height: 400px; border: 1px solid #ccc; margin-top: 20px; }
+        #status { 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            border: 1px solid #ccc; 
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Mapbox Token Test</h1>
+    <div id="status">Checking Mapbox token...</div>
+    <div id="map"></div>
+    <script>
+        const token = 'pk.eyJ1IjoiZGlzYXN0ZXJtYW5hZ2UiLCJhIjoiY2xwMHgwOGx5MDJ6eDJrcGR5ZDFkaHl4NyJ9.wxiPjFqY4TOvJWN8Kolcvw';
+        const statusDiv = document.getElementById('status');
+
+        // Validate token format
+        function validateTokenFormat(token) {
+            if (!token.startsWith('pk.')) {
+                throw new Error('Token must start with "pk." for public tokens');
+            }
+            if (token.split('.').length !== 3) {
+                throw new Error('Invalid token format - should have three parts separated by dots');
+            }
+        }
+
+        // Add console logging for debugging
+        console.log('Starting Mapbox initialization...');
+
+        try {
+            // Validate token format first
+            validateTokenFormat(token);
+            console.log('Token format is valid');
+
+            if (!mapboxgl) {
+                throw new Error('Mapbox GL JS failed to load');
+            }
+
+            console.log('Setting access token...');
+            mapboxgl.accessToken = token;
+
+            console.log('Creating map...');
+            const map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [78.9629, 20.5937], // Center of India
+                zoom: 4
+            });
+
+            map.on('load', () => {
+                console.log('Map loaded successfully');
+                statusDiv.className = 'success';
+                statusDiv.innerHTML = 'Success! Mapbox token is working correctly.';
+            });
+
+            map.on('error', (e) => {
+                console.error('Mapbox error:', e.error);
+                statusDiv.className = 'error';
+                statusDiv.innerHTML = `Error: ${e.error.message}<br><br>
+                    Please check:<br>
+                    1. Token is valid and not expired<br>
+                    2. Token has correct permissions<br>
+                    3. Token is properly formatted`;
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            statusDiv.className = 'error';
+            statusDiv.innerHTML = `Error initializing map: ${error.message}`;
+        }
+    </script>
+</body>
+</html> 

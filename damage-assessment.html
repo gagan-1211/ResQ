@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damage Assessment - Disaster Management</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        .card {
+            background-color: #ffffff;
+            border: 1px solid rgba(0,0,0,.125);
+            box-shadow: 0 2px 4px rgba(0,0,0,.05);
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid rgba(0,0,0,.125);
+            color: #212529;
+        }
+
+        .form-control, .form-select {
+            background-color: #ffffff;
+            color: #212529;
+            border: 1px solid #ced4da;
+        }
+
+        .form-label {
+            color: #212529;
+        }
+
+        .table {
+            color: #212529;
+            background-color: #ffffff;
+        }
+
+        .table thead th {
+            background-color: #f8f9fa;
+            color: #212529;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .display-4 {
+            color: #212529;
+        }
+
+        #damageMap {
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #ffffff;
+        }
+
+        .btn-success {
+            background-color: #198754;
+            border-color: #198754;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Include Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container-fluid fade-in">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="display-4 mb-4">Damage Assessment</h1>
+            </div>
+        </div>
+
+        <!-- Assessment Form -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-clipboard-list"></i> New Assessment</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="damageForm">
+                            <div class="mb-3">
+                                <label for="incidentType" class="form-label">Incident Type</label>
+                                <select class="form-select" id="incidentType" required>
+                                    <option value="">Select type...</option>
+                                    <option value="flood">Flood</option>
+                                    <option value="earthquake">Earthquake</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="cyclone">Cyclone</option>
+                                    <option value="landslide">Landslide</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="damageLevel" class="form-label">Damage Level</label>
+                                <select class="form-select" id="damageLevel" required>
+                                    <option value="">Select level...</option>
+                                    <option value="minor">Minor</option>
+                                    <option value="moderate">Moderate</option>
+                                    <option value="severe">Severe</option>
+                                    <option value="catastrophic">Catastrophic</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="images" class="form-label">Upload Images</label>
+                                <input type="file" class="form-control" id="images" multiple accept="image/*">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Submit Assessment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-map-marked-alt"></i> Damage Map</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="damageMap" style="height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assessment Reports -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-file-alt"></i> Assessment Reports</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Location</th>
+                                        <th>Incident Type</th>
+                                        <th>Damage Level</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="assessmentList">
+                                    <!-- Assessment list will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Include Navbar -->
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            });
+    </script>
+
+    <!-- Damage Assessment JavaScript -->
+    <script type="module">
+        import { dbService, storageService } from './js/firebaseConfig.js';
+
+        // Initialize damage assessment form
+        document.getElementById('damageForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const formData = {
+                    incidentType: document.getElementById('incidentType').value,
+                    location: document.getElementById('location').value,
+                    damageLevel: document.getElementById('damageLevel').value,
+                    description: document.getElementById('description').value,
+                    timestamp: Date.now(),
+                    status: 'pending'
+                };
+
+                // Handle image uploads
+                const imageFiles = document.getElementById('images').files;
+                if (imageFiles.length > 0) {
+                    const imageUrls = await Promise.all(
+                        Array.from(imageFiles).map(file => storageService.uploadImage(file))
+                    );
+                    formData.images = imageUrls;
+                }
+                
+                await dbService.createDamageAssessment(formData);
+                alert('Damage assessment submitted successfully');
+                e.target.reset();
+                updateAssessmentList();
+            } catch (error) {
+                console.error('Error submitting damage assessment:', error);
+                alert('Error submitting assessment. Please try again.');
+            }
+        });
+
+        // Update assessment list
+        async function updateAssessmentList() {
+            try {
+                const assessments = await dbService.getDamageAssessments();
+                const tbody = document.getElementById('assessmentList');
+                tbody.innerHTML = '';
+                
+                assessments.forEach(assessment => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${new Date(assessment.timestamp).toLocaleString()}</td>
+                        <td>${assessment.location}</td>
+                        <td>${assessment.incidentType}</td>
+                        <td><span class="badge bg-${getDamageLevelColor(assessment.damageLevel)}">${assessment.damageLevel}</span></td>
+                        <td><span class="badge bg-${getStatusColor(assessment.status)}">${assessment.status}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="viewAssessment('${assessment.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success" onclick="updateStatus('${assessment.id}')">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error updating assessment list:', error);
+            }
+        }
+
+        function getDamageLevelColor(level) {
+            switch (level) {
+                case 'minor': return 'info';
+                case 'moderate': return 'warning';
+                case 'severe': return 'danger';
+                case 'catastrophic': return 'dark';
+                default: return 'secondary';
+            }
+        }
+
+        function getStatusColor(status) {
+            switch (status) {
+                case 'pending': return 'warning';
+                case 'verified': return 'success';
+                case 'rejected': return 'danger';
+                default: return 'secondary';
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAssessmentList();
+        });
+
+        // Make functions available globally
+        window.viewAssessment = async (id) => {
+            // Implement view functionality
+        };
+
+        window.updateStatus = async (id) => {
+            const newStatus = prompt('Enter new status (verified/rejected):');
+            if (newStatus && ['verified', 'rejected'].includes(newStatus.toLowerCase())) {
+                try {
+                    await dbService.updateAssessmentStatus(id, newStatus.toLowerCase());
+                    updateAssessmentList();
+                } catch (error) {
+                    console.error('Error updating assessment status:', error);
+                    alert('Error updating status. Please try again.');
+                }
+            }
+        };
+    </script>
+</body>
+</html> 

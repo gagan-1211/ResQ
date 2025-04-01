@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kerala Disaster Prediction Map</title>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEcb3r1v4Li3XVugHdzy3uT5peexKOUBY&callback=initMap">
+    </script>
+    <script>
+    const WEATHER_API_KEY = '35ce3a6667937fe8dfddc88ee414ea1d';
+
+    const disasterLocations = [
+        { lat: 10.5245, lng: 76.2132, type: "Flood - Thrissur", isStatic: true, description: "Major flood occurred causing severe damage to life and property." },
+        { lat: 9.4981, lng: 76.3388, type: "Cyclone - Alappuzha", isStatic: false, description: "Cyclone risk due to high winds expected in this area." },
+        { lat: 9.8480, lng: 76.9602, type: "Landslide - Idukki", isStatic: true, description: "Heavy rainfall triggered landslides affecting roads and villages." },
+        { lat: 8.5241, lng: 76.9366, type: "Cyclone - Trivandrum", isStatic: false, description: "Cyclone forming in the Arabian Sea with possible landfall near Trivandrum." },
+        { lat: 10.7867, lng: 76.6548, type: "Flood - Palakkad", isStatic: false, description: "Current flood conditions due to continuous heavy rains." }
+    ];
+
+    const ngoCenters = [
+        // NGO Centers at least 5km away from Thrissur disaster
+        { lat: 10.5745, lng: 76.2632, name: "NGO Center 1 - Relief Hub" },
+        { lat: 10.5800, lng: 76.2700, name: "NGO Center 2 - Rescue Base" },
+
+        // NGO Centers at least 5km away from Alappuzha disaster
+        { lat: 9.5481, lng: 76.3888, name: "NGO Center 3 - Emergency Shelter" },
+        { lat: 9.5500, lng: 76.3950, name: "NGO Center 4 - Medical Aid" },
+
+        // NGO Centers at least 5km away from Idukki disaster
+        { lat: 9.8980, lng: 77.0102, name: "NGO Center 5 - Landslide Help" },
+        { lat: 9.9050, lng: 77.0180, name: "NGO Center 6 - Disaster Relief" },
+
+        // NGO Centers at least 5km away from Trivandrum disaster
+        { lat: 8.5741, lng: 76.9866, name: "NGO Center 7 - Cyclone Relief" },
+        { lat: 8.5800, lng: 76.9920, name: "NGO Center 8 - Emergency Support" },
+
+        // NGO Centers at least 5km away from Palakkad disaster
+        { lat: 10.8367, lng: 76.7048, name: "NGO Center 9 - Flood Assistance" },
+        { lat: 10.8400, lng: 76.7100, name: "NGO Center 10 - Rescue Team" }
+    ];
+
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 10.8505, lng: 76.2711 },
+            zoom: 8,
+            mapTypeControl: false,
+            streetViewControl: false
+        });
+
+        function addMarker(location, icon, title) {
+            const marker = new google.maps.Marker({
+                position: { lat: location.lat, lng: location.lng },
+                map: map,
+                title: title,
+                icon: icon
+            });
+        }
+
+        // Add disaster markers
+        disasterLocations.forEach(location => {
+            addMarker(location, "https://maps.google.com/mapfiles/ms/icons/red-dot.png", location.type);
+        });
+
+        // Add NGO center markers
+        ngoCenters.forEach(center => {
+            addMarker(center, "https://maps.google.com/mapfiles/ms/icons/green-dot.png", center.name);
+        });
+    }
+    </script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #1E88E5;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌍 Kerala Disaster Prediction Map </h1>
+    <div id="map"></div>
+</body>
+</html>

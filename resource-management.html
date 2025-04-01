@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Management - Disaster Management</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .card {
+            background: #ffffff;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #f8f9fa;
+            color: var(--text-dark);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .form-control, .form-select {
+            background-color: #ffffff;
+            color: var(--text-dark);
+            border: 1px solid #dee2e6;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: #ffffff;
+            color: var(--text-dark);
+        }
+        .table {
+            color: var(--text-dark);
+        }
+        .table thead th {
+            background-color: #f8f9fa;
+            color: var(--text-dark);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+        .form-label {
+            color: var(--text-dark);
+        }
+        h1.display-4 {
+            color: var(--text-dark);
+        }
+        .severity-high { color: #dc3545; }
+        .severity-medium { color: #ffc107; }
+        .severity-low { color: #28a745; }
+        .status-available { color: #28a745; }
+        .status-low { color: #ffc107; }
+        .status-depleted { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <!-- Include Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container-fluid fade-in">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="display-4 mb-4">Resource Management</h1>
+            </div>
+        </div>
+
+        <!-- Resource Actions -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-plus-circle text-primary"></i> Add Resource</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="resourceForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="resourceType" class="form-label">Resource Type</label>
+                                    <select class="form-select" id="resourceType" required>
+                                        <option value="">Select type...</option>
+                                        <option value="medical">Medical Supplies</option>
+                                        <option value="food">Food & Water</option>
+                                        <option value="shelter">Shelter</option>
+                                        <option value="clothing">Clothing</option>
+                                        <option value="equipment">Equipment</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="resourceName" class="form-label">Resource Name</label>
+                                    <input type="text" class="form-control" id="resourceName" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="quantity" class="form-label">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" required min="0">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="location" class="form-label">Storage Location</label>
+                                    <input type="text" class="form-control" id="location" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Add Resource
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-pie text-primary"></i> Resource Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="resourceChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resource Inventory -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-boxes text-primary"></i> Resource Inventory</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                        <th>Location</th>
+                                        <th>Status</th>
+                                        <th>Last Updated</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="resourceList">
+                                    <!-- Resources will be listed here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Include Navbar -->
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            });
+    </script>
+
+    <!-- Resource Management JavaScript -->
+    <script type="module">
+        import { dbService } from './js/services/dbService.js';
+        import { firebaseService } from './js/services/firebaseService.js';
+
+        // Initialize resource form
+        document.getElementById('resourceForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            
+            try {
+                const formData = {
+                    type: document.getElementById('resourceType').value,
+                    name: document.getElementById('resourceName').value,
+                    quantity: parseInt(document.getElementById('quantity').value),
+                    location: document.getElementById('location').value,
+                    description: document.getElementById('description').value,
+                    status: 'available'
+                };
+                
+                const result = await dbService.addResource(formData);
+                if (result.success) {
+                    showAlert('Resource added successfully!', 'success');
+                    e.target.reset();
+                    await updateResourceList();
+                    updateResourceChart();
+                }
+            } catch (error) {
+                console.error('Error adding resource:', error);
+                showAlert('Error adding resource: ' + error.message, 'danger');
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        // Update resource list
+        async function updateResourceList() {
+            try {
+                // Check authentication state
+                if (!firebaseService.auth.currentUser) {
+                    console.log('User not authenticated, redirecting to login...');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const resources = await dbService.getAllResources();
+                const tbody = document.getElementById('resourceList');
+                
+                if (!tbody) {
+                    console.error('Resource list element not found');
+                    return;
+                }
+
+                if (!resources || resources.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center">No resources found</td></tr>';
+                    updateResourceChart([]);
+                    return;
+                }
+
+                tbody.innerHTML = resources.map(resource => `
+                    <tr>
+                        <td>${resource.type || 'N/A'}</td>
+                        <td>${resource.name || 'N/A'}</td>
+                        <td>${resource.quantity || 0}</td>
+                        <td>${resource.location || 'N/A'}</td>
+                        <td><span class="badge bg-${getStatusColor(resource.status)}">${resource.status || 'N/A'}</span></td>
+                        <td>${formatDate(resource.lastUpdated)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="editResource('${resource.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteResource('${resource.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                updateResourceChart(resources);
+            } catch (error) {
+                console.error('Error updating resource list:', error);
+                showAlert('Error loading resources: ' + error.message, 'danger');
+            }
+        }
+
+        // Initialize Chart.js
+        let resourceChart;
+        function updateResourceChart(resources = []) {
+            const ctx = document.getElementById('resourceChart').getContext('2d');
+            
+            // Group resources by type
+            const resourceTypes = {};
+            resources.forEach(resource => {
+                const type = resource.type || 'Other';
+                resourceTypes[type] = (resourceTypes[type] || 0) + (resource.quantity || 0);
+            });
+
+            const data = {
+                labels: Object.keys(resourceTypes),
+                datasets: [{
+                    data: Object.values(resourceTypes),
+                    backgroundColor: [
+                        '#dc3545', // red
+                        '#28a745', // green
+                        '#ffc107', // yellow
+                        '#17a2b8', // cyan
+                        '#6610f2', // purple
+                        '#fd7e14'  // orange
+                    ]
+                }]
+            };
+
+            if (resourceChart) {
+                resourceChart.destroy();
+            }
+
+            resourceChart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Helper functions
+        function getStatusColor(status) {
+            switch (status?.toLowerCase()) {
+                case 'available': return 'success';
+                case 'low': return 'warning';
+                case 'depleted': return 'danger';
+                default: return 'secondary';
+            }
+        }
+
+        function formatDate(timestamp) {
+            if (!timestamp) return 'N/A';
+            return new Date(timestamp).toLocaleString();
+        }
+
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
+            alertDiv.style.zIndex = 1050;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            document.body.appendChild(alertDiv);
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await updateResourceList();
+            } catch (error) {
+                console.error('Initialization error:', error);
+                showAlert('Error initializing page: ' + error.message, 'danger');
+            }
+        });
+
+        // Make functions available globally
+        window.editResource = async (id) => {
+            try {
+                const resource = await dbService.getResourceById(id);
+                if (resource) {
+                    // Implement edit functionality
+                    console.log('Editing resource:', resource);
+                }
+            } catch (error) {
+                console.error('Error editing resource:', error);
+                showAlert('Error editing resource: ' + error.message, 'danger');
+            }
+        };
+
+        window.deleteResource = async (id) => {
+            if (confirm('Are you sure you want to delete this resource?')) {
+                try {
+                    await dbService.deleteResource(id);
+                    showAlert('Resource deleted successfully', 'success');
+                    await updateResourceList();
+                } catch (error) {
+                    console.error('Error deleting resource:', error);
+                    showAlert('Error deleting resource: ' + error.message, 'danger');
+                }
+            }
+        };
+    </script>
+</body>
+</html> 

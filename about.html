@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Disaster Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #212529;
+            background-color: #f8f9fa;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #f8f9fa !important;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.05);
+        }
+
+        .navbar-dark {
+            background-color: #f8f9fa !important;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #212529 !important;
+        }
+
+        .navbar-dark .navbar-brand {
+            color: #212529 !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: rgba(255, 255, 255, 0.9);
+            color: #212529;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,.125);
+        }
+
+        /* Sections */
+        .section-title {
+            text-align: left;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 2rem;
+            color: #212529;
+        }
+
+        .content-box {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.05);
+            transition: transform 0.3s ease-in-out;
+            border: 1px solid rgba(0,0,0,.125);
+        }
+
+        .content-box:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Founders Section */
+        .founder-card {
+            text-align: center;
+            padding: 20px;
+            color: #212529;
+        }
+
+        .founder-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 3px solid #0d6efd;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #f8f9fa;
+            color: #212529;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(0,0,0,.125);
+        }
+
+        /* Smooth Fade-In Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-in-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu {
+            background-color: #ffffff;
+            border: 1px solid rgba(0,0,0,.125);
+        }
+
+        .dropdown-item {
+            color: #212529;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1068ec;">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <!-- Left Side: Logo and Description -->
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="logo.png" alt="Logo" width="50" class="me-2">
+                <span style="color: white; font-size: 20px; font-weight: bold;">Disaster Response and Management</span>
+            </a>
+
+            <!-- Right Side: Menu Items -->
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="About.html">About Us</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="emergencyDropdown" role="button" data-bs-toggle="dropdown">Emergency Contact</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="tel:+918594896623">📞 +91 8594896623</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="helpersDropdown" role="button" data-bs-toggle="dropdown">Helpers</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="volulogin.html">Register as a Volunteer</a></li>
+                        <li><a class="dropdown-item" href="ngologin.html">Register as a NGO'S/Govt Authority</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        
+    </div>
+
+    <div class="hero">
+        <h1>About Our Disaster Management Platform</h1>
+        <p>Helping communities stay prepared, respond effectively, and recover faster from disasters.</p>
+    </div>
+
+    <div class="container mt-5">
+        <div class="content-box">
+            <h2 class="section-title"> Vision</h2>
+            <p><strong>"A world where technology empowers communities to respond swiftly, coordinate effectively, and recover resiliently from disasters—minimizing losses and saving lives."</strong></p>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="content-box">
+            <h2 class="section-title"> Mission</h2>
+            <ul>
+                <li><strong>Real-Time Alerts:</strong> Get instant notifications about impending disasters.</li><br>
+                <li><strong>Resource Management:</strong> Efficiently track and allocate resources.</li><br>
+                <li><strong>Deliver Real-time Alerts:</strong> Provide instant, accurate disaster notifications from multiple sources.</li><br>
+                <li><strong>Enhance Disaster Coordination:</strong> Enable governments, NGOs, and volunteers to track damage, request aid, and distribute resources efficiently.</li><br>
+                <li><strong>Empower Communities:</strong> Foster engagement through crowd-sourced reports, safety information, and volunteer mobilization.</li><br>
+                <li><strong>Leverage Data & AI:</strong> Utilize analytics and predictive insights to optimize disaster response.</li><br>
+                <li><strong>Ensure Accessibility:</strong> Build an intuitive and inclusive platform for all users.</li><br>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="content-box">
+            <h2 class="section-title">Meet Our Team</h2>
+            <p class="text-center">Department of Computer Science Engineering </p>
+            <div class="row text-center">
+                <div class="col-md-3 founder-card">
+                    <h4>👨‍💻 Gagan nadiger</h4>
+                </div>
+                <div class="col-md-3 founder-card">
+                    <h4>👨‍💻 Pranav</h4>
+                </div>
+                <div class="col-md-3 founder-card">
+                    <h4>👩‍💻 Aditi J </h4>
+                </div>
+                <div class="col-md-3 founder-card">
+                    <h4>👩‍💻 Jyoti Jadhav</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <footer class="footer">
+        <p>&copy; 2025 Disaster Response and Management Platform. All Rights Reserved.</p>
+    </footer>
+
+    
+</body>
+</html>
+

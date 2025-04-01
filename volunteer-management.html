@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Management - Disaster Management</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: 1px solid rgba(0,0,0,.125);
+            box-shadow: 0 2px 4px rgba(0,0,0,.05);
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid rgba(0,0,0,.125);
+            color: #212529;
+        }
+
+        .card-title {
+            color: #212529;
+        }
+
+        .card-text {
+            color: #212529;
+        }
+
+        .text-muted {
+            color: #6c757d !important;
+        }
+
+        .form-control, .form-select {
+            background-color: #ffffff;
+            color: #212529;
+            border: 1px solid #ced4da;
+        }
+
+        .form-label {
+            color: #212529;
+        }
+
+        .table {
+            color: #212529;
+            background-color: #ffffff;
+        }
+
+        .table thead th {
+            background-color: #f8f9fa;
+            color: #212529;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .display-4 {
+            color: #212529;
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #ffffff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Include Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container-fluid fade-in">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="display-4 mb-4">Volunteer Management</h1>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-users"></i> Total Volunteers</h5>
+                        <h2 class="card-text" id="totalVolunteers">0</h2>
+                        <p class="text-muted mb-0">Active volunteers</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-tasks"></i> Active Tasks</h5>
+                        <h2 class="card-text" id="activeTasks">0</h2>
+                        <p class="text-muted mb-0">Ongoing assignments</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-building"></i> NGOs</h5>
+                        <h2 class="card-text" id="totalNGOs">0</h2>
+                        <p class="text-muted mb-0">Partner organizations</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-clock"></i> Hours Served</h5>
+                        <h2 class="card-text" id="totalHours">0</h2>
+                        <p class="text-muted mb-0">Total volunteer hours</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Volunteer Management -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-user-plus"></i> Add Volunteer</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="volunteerForm">
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="skills" class="form-label">Skills</label>
+                                <select class="form-select" id="skills" multiple required>
+                                    <option value="medical">Medical</option>
+                                    <option value="rescue">Rescue Operations</option>
+                                    <option value="logistics">Logistics</option>
+                                    <option value="communication">Communication</option>
+                                    <option value="technical">Technical Support</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="availability" class="form-label">Availability</label>
+                                <select class="form-select" id="availability" required>
+                                    <option value="fulltime">Full Time</option>
+                                    <option value="parttime">Part Time</option>
+                                    <option value="weekends">Weekends Only</option>
+                                    <option value="oncall">On Call</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Register Volunteer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-pie"></i> Volunteer Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="volunteerChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Volunteer List -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-list"></i> Volunteer Registry</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Skills</th>
+                                        <th>Availability</th>
+                                        <th>Location</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="volunteerList">
+                                    <!-- Volunteer list will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Include Navbar -->
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            });
+    </script>
+
+    <!-- Volunteer Management JavaScript -->
+    <script type="module">
+        import { dbService } from './js/firebaseConfig.js';
+
+        // Initialize volunteer form
+        document.getElementById('volunteerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const formData = {
+                    fullName: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    skills: Array.from(document.getElementById('skills').selectedOptions).map(option => option.value),
+                    availability: document.getElementById('availability').value,
+                    location: document.getElementById('location').value,
+                    status: 'active',
+                    registeredDate: Date.now()
+                };
+                
+                await dbService.addVolunteer(formData);
+                alert('Volunteer registered successfully');
+                e.target.reset();
+                updateVolunteerList();
+                updateVolunteerChart();
+                updateStats();
+            } catch (error) {
+                console.error('Error registering volunteer:', error);
+                alert('Error registering volunteer. Please try again.');
+            }
+        });
+
+        // Update volunteer list
+        async function updateVolunteerList() {
+            try {
+                const volunteers = await dbService.getAllVolunteers();
+                const tbody = document.getElementById('volunteerList');
+                tbody.innerHTML = '';
+                
+                volunteers.forEach(volunteer => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${volunteer.fullName}</td>
+                        <td>${volunteer.email}</td>
+                        <td>${volunteer.phone}</td>
+                        <td>${volunteer.skills.join(', ')}</td>
+                        <td>${volunteer.availability}</td>
+                        <td>${volunteer.location}</td>
+                        <td><span class="badge bg-${getStatusColor(volunteer.status)}">${volunteer.status}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="editVolunteer('${volunteer.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deactivateVolunteer('${volunteer.id}')">
+                                <i class="fas fa-user-times"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error updating volunteer list:', error);
+            }
+        }
+
+        // Update volunteer chart
+        async function updateVolunteerChart() {
+            try {
+                const volunteers = await dbService.getAllVolunteers();
+                const skillDistribution = {};
+                
+                volunteers.forEach(volunteer => {
+                    volunteer.skills.forEach(skill => {
+                        skillDistribution[skill] = (skillDistribution[skill] || 0) + 1;
+                    });
+                });
+
+                const ctx = document.getElementById('volunteerChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(skillDistribution),
+                        datasets: [{
+                            data: Object.values(skillDistribution),
+                            backgroundColor: [
+                                '#FF6384',
+                                '#36A2EB',
+                                '#FFCE56',
+                                '#4BC0C0',
+                                '#9966FF'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'right'
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error updating volunteer chart:', error);
+            }
+        }
+
+        // Update stats
+        async function updateStats() {
+            try {
+                const stats = await dbService.getVolunteerStats();
+                document.getElementById('totalVolunteers').textContent = stats.totalVolunteers;
+                document.getElementById('activeTasks').textContent = stats.activeTasks;
+                document.getElementById('totalNGOs').textContent = stats.totalNGOs;
+                document.getElementById('totalHours').textContent = stats.totalHours;
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        function getStatusColor(status) {
+            switch (status) {
+                case 'active': return 'success';
+                case 'inactive': return 'danger';
+                case 'pending': return 'warning';
+                default: return 'secondary';
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateVolunteerList();
+            updateVolunteerChart();
+            updateStats();
+        });
+
+        // Make functions available globally
+        window.editVolunteer = async (id) => {
+            // Implement edit functionality
+        };
+
+        window.deactivateVolunteer = async (id) => {
+            if (confirm('Are you sure you want to deactivate this volunteer?')) {
+                try {
+                    await dbService.updateVolunteerStatus(id, 'inactive');
+                    updateVolunteerList();
+                    updateStats();
+                } catch (error) {
+                    console.error('Error deactivating volunteer:', error);
+                    alert('Error deactivating volunteer. Please try again.');
+                }
+            }
+        };
+    </script>
+</body>
+</html> 
